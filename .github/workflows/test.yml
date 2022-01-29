@@ -1,33 +1,20 @@
 name: Test Action
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'input/**'
+on: pull_request
 
 jobs:
   update_output:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          ls -l input/* | wc -l > output/nFiles.txt
-          date > misc/updated.txt
-      - uses: gr2m/create-or-update-pull-request-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: "Automated build"
-          body: "Automated build"
-          branch: "autobuild"
-          path: "output/"
-          commit-message: "build: output"
+          persist-credentials: false
+      - run: ls -l input/* | wc -l > output/nFiles.txt
       - uses: gr2m/create-or-update-pull-request-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          path: "misc/"
-          commit-message: "build: misc"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      branch: ${{ github.head_ref }}
+      author: "Automated Action"
+      path: "output/"
+      commit-message: "build: output"

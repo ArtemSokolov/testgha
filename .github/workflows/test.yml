@@ -14,10 +14,10 @@ jobs:
           persist-credentials: false
       - run: ls -l input/* | wc -l > output/nFiles.txt
       - uses: gr2m/create-or-update-pull-request-action@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      branch: ${{ github.head_ref }}
-      author: "Automated Action"
-      path: "output/"
-      commit-message: "build: output"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: ${{ github.head_ref }}
+          author: "Automated Action"
+          path: "output/"
+          commit-message: "build: output"

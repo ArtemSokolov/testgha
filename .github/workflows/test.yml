@@ -12,12 +12,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - run: ls -l input/* | wc -l > output/nFiles.txt
+      - run: |
+          ls -l input/* | wc -l > output/nFiles.txt
+          date > misc/updated.txt
       - uses: gr2m/create-or-update-pull-request-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: ${{ github.head_ref }}
           author: "Automated Action <email@domain.test>"
-          path: "output/"
+          path: ["output/", "misc/"]
           commit-message: "build: output"

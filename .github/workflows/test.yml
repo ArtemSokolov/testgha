@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        persist-credentials: false
+        with:
+          persist-credentials: false
       - run: |
           ls -l input/* | wc -l > output/nFiles.txt
           date > misc/updated.txt

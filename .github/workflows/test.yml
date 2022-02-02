@@ -1,7 +1,10 @@
 name: Test Action
 
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - 'input/**'
 
@@ -10,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        persist-credentials: false
       - run: |
           ls -l input/* | wc -l > output/nFiles.txt
           date > misc/updated.txt

@@ -23,4 +23,11 @@ jobs:
           title: "Automated build"
           body: "Automated build"
           branch: "autobuild"
+          path: "output/"
           commit-message: "build: output"
+      - uses: gr2m/create-or-update-pull-request-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: "misc/"
+          commit-message: "build: misc"
